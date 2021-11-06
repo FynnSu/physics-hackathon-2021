@@ -14,15 +14,24 @@ def make_gif(positionFrames, outPath='movie.gif'):
         ax.plot(range(len(positionFrames[0])), positionFrames[i])
         fname = f"tmp/tmp.png"
         plt.savefig(fname)
+        plt.close(fig)
         images.append(imageio.imread(fname))
     imageio.mimsave(outPath, images)
-
 
 
 def apply_gravity(theta, t, g, m, k):
     y1, vy1 = theta
     dthetadt = [vy1, -m*g-y1*k]
     return dthetadt
+
+
+def magic(theta, t, m, k, dx=1):
+    ys, vys = theta[:len(theta)//2], theta[len(theta)//2:]
+    ays = [0]
+    for i in range(1,len(ys)-1):
+        ays.append(m*k*((ys[i-1]-ys[i])+(ys[i+1]-ys[i])))
+    ays.append(0)
+    return np.append(vys,ays)
 
 
 def apply_physics(positions, velocities, dx, dt, m, T):
@@ -51,32 +60,37 @@ def apply_physics(positions, velocities, dx, dt, m, T):
     new_velocities.append(0)
 
 def main():
-    print("Hello World")
-    g = 10
-    m = 1
-    k = 1
-    t = np.linspace(0,5,20)
-    theta0 = (-5,0)
+    # print("Hello World")
+    # g = 10
+    # m = 1
+    # k = 1
+    # t = np.linspace(0,5,20)
+    # theta0 = (-5,0)
+    #
+    # sol = odeint(apply_gravity, theta0, t, args=(g, m, k))
+    # fig, ax = plt.subplots()
+    # ax.plot(t, sol[:, 0], label="position1")
+    # plt.legend()
+    # plt.show()
+    #
+    #
+    # madeuppositions = np.random.uniform(-1,1,[20,30])
+    # make_gif(madeuppositions)
+    # # Here I am creating the initial positions for 30 beads
+    # dx = 1
+    # dt = 0.002
+    # T = 0.01
+    # m = 0.001
+    # pos = []
+    # for i in range(30):
+    #     pos.append(np.sin((2*np.pi * i)/(30*dx)))
 
-    sol = odeint(apply_gravity, theta0, t, args=(g, m, k))
-    fig, ax = plt.subplots()
-    ax.plot(t, sol[:, 0], label="position1")
-    plt.legend()
-    plt.show()
 
-
-    madeuppositions = np.random.uniform(-1,1,[20,30])
-    make_gif(madeuppositions)
-    # Here I am creating the initial positions for 30 beads
-    dx = 1
-    dt = 0.002
-    T = 0.01
-    m = 0.001
-    pos = []
-    for i in range(30):
-        pos.append(np.sin((2*np.pi * i)/(30*dx)))
-
-
+    points = 30
+    t = np.linspace(0,10,100)
+    theta0 = np.append(np.sin(np.linspace(0,2*np.pi,points))+np.sin(np.linspace(0,4*np.pi,points)), np.zeros(points))
+    sol = odeint(magic, theta0, t, args=(1,1,1))
+    make_gif(sol[:,:len(sol[0])//2])
 
 if __name__ == '__main__':
     main()
