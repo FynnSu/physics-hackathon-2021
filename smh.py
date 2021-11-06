@@ -87,29 +87,44 @@ def main():
     # for i in range(30):
     #     pos.append(np.sin((2*np.pi * i)/(30*dx)))
 
-    dx = 1
-    dt = 0.002
-    T = 0.01
-    m = 0.001
-    pos = []
-    velocs = np.zeros(30)
-    for i in range(30):
-        pos.append(np.sin((2*np.pi * i)/(30*dx)))
-    for j in range(20):
-        poss,velocss = apply_physics(pos,velocs, dx, dt, m, T)
-        pos = poss
-        velocs = velocss
+    # dx = 1
+    # dt = 0.002
+    # T = 0.01
+    # m = 0.001
+    # pos = []
+    # velocs = np.zeros(30)
+    # for i in range(30):
+    #     pos.append(np.sin((2*np.pi * i)/(30*dx)))
+    # for j in range(20):
+    #     poss,velocss = apply_physics(pos,velocs, dx, dt, m, T)
+    #     pos = poss
+    #     velocs = velocss
+    #
+    # # madeuppositions = np.random.uniform(-1,1,[20,30])
+    # make_gif(pos)
+    # # Here I am creating the initial positions for 30 beads
 
-    # madeuppositions = np.random.uniform(-1,1,[20,30])
-    make_gif(pos)
-    # Here I am creating the initial positions for 30 beads
 
+    # points = 30
+    # t = np.linspace(0,10,100)
+    # theta0 = np.append(np.sin(np.linspace(0,2 * np.pi,points))+np.sin(np.linspace(0, 4 * np.pi,points)), np.zeros(points))
+    # sol = odeint(magic, theta0, t, args=(1,1,1))
+    # make_gif(sol[:,:len(sol[0])//2])
 
     points = 30
-    t = np.linspace(0,10,100)
-    theta0 = np.append(np.sin(np.linspace(0,2*np.pi,points))+np.sin(np.linspace(0,4*np.pi,points)), np.zeros(points))
-    sol = odeint(magic, theta0, t, args=(1,1,1))
-    make_gif(sol[:,:len(sol[0])//2])
+    t = [0,1]
+    nframes = 100
+    frames = [np.append(np.sin(np.linspace(0, 2 * np.pi, points)) + np.sin(np.linspace(0, 4 * np.pi, points)),
+                           np.zeros(points))]
+
+    for i in range(nframes):
+        theta0 = frames[-1]
+        sol = odeint(magic, theta0, t, args=(1, 1, 1))
+        noise = np.append(np.append(np.append(0,np.random.uniform(-0.01,0.01, points-2)),0), np.zeros(points))
+        frames.append(sol[1]+noise)
+
+    make_gif(np.array(frames)[:,:points])
+
 
 if __name__ == '__main__':
     main()
