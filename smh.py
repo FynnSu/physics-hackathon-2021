@@ -46,8 +46,8 @@ def apply_physics(positions, velocities, dx, dt, m, T):
         rdisp = positions(i+1)
         curdisp = positions(i)
         # Next compute the gradients. We will not use the approximation!
-        sintheta = np.arcsin((curdisp - ldisp)/dx)
-        sinpsi = np.arcsin((curdisp - rdisp)/dx)
+        sintheta = np.sin((curdisp - ldisp)/dx)
+        sinpsi = np.sin((curdisp - rdisp)/dx)
         # Now we have that the equation of motion is m(acc) = -T(sintheta + sinpsi)
         # acc = -T/m * (sintheta + sinpsi)
         acc = -T/m * (sintheta + sinpsi)
@@ -59,6 +59,8 @@ def apply_physics(positions, velocities, dx, dt, m, T):
     new_positions.append(0)
     new_velocities.append(0)
 
+    return new_positions, new_velocities
+
 def main():
     # print("Hello World")
     # g = 10
@@ -66,7 +68,7 @@ def main():
     # k = 1
     # t = np.linspace(0,5,20)
     # theta0 = (-5,0)
-    #
+
     # sol = odeint(apply_gravity, theta0, t, args=(g, m, k))
     # fig, ax = plt.subplots()
     # ax.plot(t, sol[:, 0], label="position1")
@@ -84,6 +86,23 @@ def main():
     # pos = []
     # for i in range(30):
     #     pos.append(np.sin((2*np.pi * i)/(30*dx)))
+
+    dx = 1
+    dt = 0.002
+    T = 0.01
+    m = 0.001
+    pos = []
+    velocs = np.zeros(30)
+    for i in range(30):
+        pos.append(np.sin((2*np.pi * i)/(30*dx)))
+    for j in range(20):
+        poss,velocss = apply_physics(pos,velocs, dx, dt, m, T)
+        pos = poss
+        velocs = velocss
+
+    # madeuppositions = np.random.uniform(-1,1,[20,30])
+    make_gif(pos)
+    # Here I am creating the initial positions for 30 beads
 
 
     points = 30
