@@ -75,19 +75,7 @@ def main():
     pos = []
     for i in range(30):
         pos.append(np.sin((2*np.pi * i)/(30*dx)))
-    
 
-    images = []
-    ymin, ymax = np.min(sol[:,0]), np.max(sol[:,0])
-    for i in range(len(sol)):
-        fig, ax = plt.subplots()
-        plt.ylim(ymin-1, ymax+1)
-        ax.scatter(0, sol[i][0], label="position1")
-        plt.legend()
-        fname = f"tmp/tmp.png"
-        plt.savefig(fname)
-        images.append(imageio.imread(fname))
-    imageio.mimsave('movie.gif', images)
 
 
 if __name__ == '__main__':
