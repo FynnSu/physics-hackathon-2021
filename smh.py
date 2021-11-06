@@ -51,13 +51,14 @@ def main():
     plt.show()
 
     # Here I am creating the initial positions for 30 beads
-    pos = []
-    for i in range(30):
-        pos.append(sin((2*np.pi * i)/(30*dx)))
     dx = 1
     dt = 0.002
     T = 0.01
     m = 0.001
+    pos = []
+    for i in range(30):
+        pos.append(np.sin((2*np.pi * i)/(30*dx)))
+    
 
     images = []
     ymin, ymax = np.min(sol[:,0]), np.max(sol[:,0])
