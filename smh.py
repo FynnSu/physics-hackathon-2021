@@ -37,9 +37,6 @@ def apply_physics(positions, velocities, dx, dt, m, T):
     new_velocities.append(0)
 
 def main():
-<<<<<<< HEAD
-    plt.plot 
-=======
     print("Hello World")
     g = 10
     m = 1
@@ -64,7 +61,6 @@ def main():
         plt.savefig(fname)
         images.append(imageio.imread(fname))
     imageio.mimsave('movie.gif', images)
->>>>>>> 45fd26dfcdbefc011dee5fede871efb1a1efc81c
 
 
 if __name__ == '__main__':
