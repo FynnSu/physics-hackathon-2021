@@ -6,3 +6,5 @@ def functional(sites):
     '''Functional that computes the energy for a given function.'''
     return np.sum((sites - np.roll(sites))**2)
 
+print(np.sqrt(test_a))
+
