@@ -50,31 +50,38 @@ def apply_physics(positions, velocities, dx, dt, m, T):
     new_positions.append(0)
     new_velocities.append(0)
 
+    return new_positions, new_velocities
+
 def main():
-    print("Hello World")
-    g = 10
-    m = 1
-    k = 1
-    t = np.linspace(0,5,20)
-    theta0 = (-5,0)
+    # print("Hello World")
+    # g = 10
+    # m = 1
+    # k = 1
+    # t = np.linspace(0,5,20)
+    # theta0 = (-5,0)
 
-    sol = odeint(apply_gravity, theta0, t, args=(g, m, k))
-    fig, ax = plt.subplots()
-    ax.plot(t, sol[:, 0], label="position1")
-    plt.legend()
-    plt.show()
+    # sol = odeint(apply_gravity, theta0, t, args=(g, m, k))
+    # fig, ax = plt.subplots()
+    # ax.plot(t, sol[:, 0], label="position1")
+    # plt.legend()
+    # plt.show()
 
-
-    madeuppositions = np.random.uniform(-1,1,[20,30])
-    make_gif(madeuppositions)
-    # Here I am creating the initial positions for 30 beads
     dx = 1
     dt = 0.002
     T = 0.01
     m = 0.001
     pos = []
+    velocs = np.zeros(30)
     for i in range(30):
         pos.append(np.sin((2*np.pi * i)/(30*dx)))
+    for j in range(20):
+        poss,velocss = apply_physics(pos,velocs, dx, dt, m, T)
+        pos = poss
+        velocs = velocss
+
+    # madeuppositions = np.random.uniform(-1,1,[20,30])
+    make_gif(pos)
+    # Here I am creating the initial positions for 30 beads
 
 
 
