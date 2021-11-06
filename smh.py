@@ -1,8 +1,17 @@
 import numpy as np
+from scipy.integrate import odeint
+
+
+def apply_gravity(y,vy):
+    pass
+
+
+def apply_physics(positions, velocities, density, dt):
+    pass
 
 
 def main():
-    pass
+    print("Hello World")
 
 
 if __name__ == '__main__':
