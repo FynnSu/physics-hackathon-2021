@@ -37,8 +37,8 @@ def apply_physics(positions, velocities, dx, dt, m, T):
         rdisp = positions(i+1)
         curdisp = positions(i)
         # Next compute the gradients. We will not use the approximation!
-        sintheta = np.arcsin((curdisp - ldisp)/dx)
-        sinpsi = np.arcsin((curdisp - rdisp)/dx)
+        sintheta = np.sin((curdisp - ldisp)/dx)
+        sinpsi = np.sin((curdisp - rdisp)/dx)
         # Now we have that the equation of motion is m(acc) = -T(sintheta + sinpsi)
         # acc = -T/m * (sintheta + sinpsi)
         acc = -T/m * (sintheta + sinpsi)
