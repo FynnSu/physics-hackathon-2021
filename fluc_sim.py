@@ -16,40 +16,67 @@ def apply_change(to_sites, site, change):
     return to_sites
 
 
-def one_step(sites, beta):
+def one_step(sites, beta, iters=1):
     # Function that applies the metropolis algorithm once
+    for siteidx in np.random.choice(range(1,len(sites)-2), iters, replace=True):
+        # Picking site
+        focus_site = siteidx
 
-    # Picking site
-    focus_site = random.randint(1, len(sites)-2)
+        # change = random.choice([-1, 1])
+        change = np.random.normal(0, 1)
 
-    change = random.choice([-1, 1])
+        # Creating sites after applying the change
+        potential_sites = apply_change(sites.copy(), focus_site, change)
 
-    # Creating sites after applying the change
-    potential_sites = apply_change(sites.copy(), focus_site, change)
+        # Getting the change in energy
+        energy_diff = energy_functional(potential_sites) - energy_functional(sites)
 
-    # Getting the change in energy
-    energy_diff = energy_functional(potential_sites) - energy_functional(sites)
+        # Now we apply the metropolis algorithm
+        if energy_diff <= 0:  # Case where the energy of the surface is smaller
+            sites = potential_sites
+        else:  # Case where the energy of the surface is greater
+            if random.random() < np.exp(-beta * energy_diff):
+                sites = potential_sites
 
-    # Now we apply the metropolis algorithm
-    if energy_diff <= 0:  # Case where the energy of the surface is smaller
-        return potential_sites
-    else:  # Case where the energy of the surface is greater
-        if random.random() < np.exp(-beta * energy_diff):
-            return potential_sites
-        else:
-            return sites
+    return sites
 
 
-############################
-# TESTING
-L_val = 50
+    # # Picking site
+    # focus_site = random.randint(1, len(sites)-2)
+    #
+    # # change = random.choice([-1, 1])
+    # change = np.random.normal(0, 1)
+    #
+    # # Creating sites after applying the change
+    # potential_sites = apply_change(sites.copy(), focus_site, change)
+    #
+    # # Getting the change in energy
+    # energy_diff = energy_functional(potential_sites) - energy_functional(sites)
+    #
+    # # Now we apply the metropolis algorithm
+    # if energy_diff <= 0:  # Case where the energy of the surface is smaller
+    #     return potential_sites
+    # else:  # Case where the energy of the surface is greater
+    #     if random.random() < np.exp(-beta * energy_diff):
+    #         return potential_sites
+    #     else:
+    #         return sites
 
-all_sites = np.zeros(L_val)
 
-for i in range(1000000):
-    all_sites = one_step(all_sites, 1)
+def main():
+    ############################
+    # TESTING
+    L_val = 50
 
-print(all_sites)
+    all_sites = np.zeros(L_val)
 
-plt.plot(all_sites)
-plt.show()
+    for i in range(1000000):
+        all_sites = one_step(all_sites, 1)
+
+    print(all_sites)
+
+    plt.plot(all_sites)
+    plt.show()
+
+if __name__ == '__main__':
+    main()

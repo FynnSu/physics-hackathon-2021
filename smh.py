@@ -3,12 +3,13 @@ import matplotlib as plt
 from scipy.integrate import odeint
 from matplotlib import pyplot as plt
 import imageio
+from tqdm import tqdm
 
 
 def make_gif(positionFrames, outPath='movie.gif'):
     images = []
     ymin, ymax = np.min(positionFrames), np.max(positionFrames)
-    for i in range(len(positionFrames)):
+    for i in tqdm(range(len(positionFrames)), desc="Making GIF"):
         fig, ax = plt.subplots()
         plt.ylim(ymin-1, ymax+1)
         ax.plot(range(len(positionFrames[0])), positionFrames[i])
@@ -61,55 +62,14 @@ def apply_physics(positions, velocities, dx, dt, m, T):
 
     return new_positions, new_velocities
 
+
+def apply_magic(theta, dt):
+    t = [0, dt]
+    sol = odeint(magic, theta, t, args=(1, 1, 1))
+    return sol[1]
+
+
 def main():
-    # print("Hello World")
-    # g = 10
-    # m = 1
-    # k = 1
-    # t = np.linspace(0,5,20)
-    # theta0 = (-5,0)
-
-    # sol = odeint(apply_gravity, theta0, t, args=(g, m, k))
-    # fig, ax = plt.subplots()
-    # ax.plot(t, sol[:, 0], label="position1")
-    # plt.legend()
-    # plt.show()
-    #
-    #
-    # madeuppositions = np.random.uniform(-1,1,[20,30])
-    # make_gif(madeuppositions)
-    # # Here I am creating the initial positions for 30 beads
-    # dx = 1
-    # dt = 0.002
-    # T = 0.01
-    # m = 0.001
-    # pos = []
-    # for i in range(30):
-    #     pos.append(np.sin((2*np.pi * i)/(30*dx)))
-
-    # dx = 1
-    # dt = 0.002
-    # T = 0.01
-    # m = 0.001
-    # pos = []
-    # velocs = np.zeros(30)
-    # for i in range(30):
-    #     pos.append(np.sin((2*np.pi * i)/(30*dx)))
-    # for j in range(20):
-    #     poss,velocss = apply_physics(pos,velocs, dx, dt, m, T)
-    #     pos = poss
-    #     velocs = velocss
-    #
-    # # madeuppositions = np.random.uniform(-1,1,[20,30])
-    # make_gif(pos)
-    # # Here I am creating the initial positions for 30 beads
-
-
-    # points = 30
-    # t = np.linspace(0,10,100)
-    # theta0 = np.append(np.sin(np.linspace(0,2 * np.pi,points))+np.sin(np.linspace(0, 4 * np.pi,points)), np.zeros(points))
-    # sol = odeint(magic, theta0, t, args=(1,1,1))
-    # make_gif(sol[:,:len(sol[0])//2])
 
     points = 30
     t = [0,1]
