@@ -37,7 +37,7 @@ def one_step_2d(sites, beta, iters=1):
             change = np.random.normal(0, 1)
 
             # Creating sites after applying the change
-            potential_sites = apply_change(sites.copy(), siteidx, siteidy,  change)
+            potential_sites = apply_change_2d(sites.copy(), siteidx, siteidy,  change)
 
             # Getting the change in energy
             energy_diff = energy_functional(potential_sites) - energy_functional(sites)
@@ -114,7 +114,33 @@ def main():
     plt.plot(all_sites)
     plt.show()
     '''
-    [[1, 2, 3], [4, 5, 6], [ 7, 8, 9]][1][2]
+    L_val = 10
+
+    all_sites = np.zeros((L_val, L_val))
+
+    for i in range(1000):
+        all_sites = one_step_2d(all_sites, 5)
+
+    print(all_sites)
+
+    def fun(x, y):
+        return all_sites[x, y]
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    x = y = np.arange(0, L_val, 1)
+    X, Y = np.meshgrid(x, y)
+    zs = np.array(fun(np.ravel(X), np.ravel(Y)))
+    Z = zs.reshape(X.shape)
+
+    ax.plot_surface(X, Y, Z)
+
+    ax.set_xlabel('X Axis')
+    ax.set_ylabel('Y Axis')
+    ax.set_zlabel('Amplitude')
+
+    plt.show()
+    
 
     
 
