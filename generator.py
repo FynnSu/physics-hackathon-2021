@@ -24,7 +24,8 @@ def parse_args():
 def genSurface(theta0, rows, dt, k=1, m=1):
     X, Y = np.meshgrid(np.linspace(0, 1, rows), np.linspace(0, 1, rows))
     t = [0, dt]
-    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+    fig, ax = plt.subplots(figsize=(10,10), subplot_kw={"projection": "3d"})
+    ax.patch.set_facecolor("grey")
     ax.set_axis_off()
     canvas = FigureCanvas(fig)
     zmin, zmax = np.min(theta0[:rows**2]), np.max(theta0[:rows**2])
@@ -38,7 +39,7 @@ def genSurface(theta0, rows, dt, k=1, m=1):
         zs = np.array(theta0)[:rows**2].reshape((rows, rows))
         if np.min(zs)<zmin: zmin = np.min(zs)
         if np.max(zs)<zmin: zmax = np.max(zs)
-        surf = ax.plot_surface(X, Y, zs, cmap=cm.coolwarm,
+        surf = ax.plot_surface(X, Y, zs, cmap=cm.gist_gray,
                                linewidth=0, antialiased=False, vmin=zmin, vmax=zmax)
 
         canvas.draw()
