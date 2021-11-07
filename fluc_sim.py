@@ -11,7 +11,6 @@ def energy_functional_2d(sites):
     '''Functional for 2D surface'''
     return np.sum((sites - np.roll(np.array(sites), 1, axis=0))**2 + (sites - np.transpose(np.roll(np.transpose((np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))), 1, axis=0))))**2
 
-
 def apply_change(to_sites, site, change):
     
     # Function to apply a change to some site
@@ -33,8 +32,8 @@ def one_step_2d(sites, beta, iters=1):
             # Picking site
             
 
-            # change = random.choice([-1, 1])
-            change = np.random.normal(0, 1)
+            change = random.choice([-1, 1])
+            #change = np.random.normal(0, 1)
 
             # Creating sites after applying the change
             potential_sites = apply_change_2d(sites.copy(), siteidx, siteidy,  change)
@@ -114,12 +113,12 @@ def main():
     plt.plot(all_sites)
     plt.show()
     '''
-    L_val = 10
+    L_val = 40
 
     all_sites = np.zeros((L_val, L_val))
 
-    for i in range(1000):
-        all_sites = one_step_2d(all_sites, 5)
+    for i in range(10000):
+        all_sites = one_step_2d(all_sites, 0.5)
 
     print(all_sites)
 
