@@ -19,6 +19,37 @@ def apply_change(to_sites, site, change):
 
     return to_sites
 
+def apply_change_2d(to_sites, site_a1, site_a2, change):
+    
+    # Function to apply a change to some site
+    to_sites[site_a1][site_a2] += change
+
+    return to_sites  
+
+def one_step_2d(sites, beta, iters=1):
+    # Function that applies the metropolis algorithm once (to a number of different sites)
+    for siteidx in np.random.choice(range(1,len(sites)-1), iters, replace=True):
+        for siteidy in np.random.choice(range(1,len(sites[0])-1), iters, replace=True):
+            # Picking site
+            
+
+            # change = random.choice([-1, 1])
+            change = np.random.normal(0, 1)
+
+            # Creating sites after applying the change
+            potential_sites = apply_change(sites.copy(), siteidx, siteidy,  change)
+
+            # Getting the change in energy
+            energy_diff = energy_functional(potential_sites) - energy_functional(sites)
+
+            # Now we apply the metropolis algorithm
+            if energy_diff <= 0:  # Case where the energy of the surface is smaller
+                sites = potential_sites
+            else:  # Case where the energy of the surface is greater
+                if random.random() < np.exp(-beta * energy_diff):
+                    sites = potential_sites
+
+    return sites
 
 def one_step(sites, beta, iters=1):
     # Function that applies the metropolis algorithm once (to a number of different sites)
@@ -83,6 +114,8 @@ def main():
     plt.plot(all_sites)
     plt.show()
     '''
+    [[1, 2, 3], [4, 5, 6], [ 7, 8, 9]][1][2]
+
     
 
 
