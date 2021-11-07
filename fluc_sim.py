@@ -7,6 +7,10 @@ def energy_functional(sites):
     '''Functional that computes the energy for a given function.'''
     return np.sum((sites - np.roll(sites, 1)) ** 2)
 
+def energy_functional_2d(sites):
+    '''Functional for 2D surface'''
+    return np.sum((sites - np.roll(np.array(sites), 1, axis=0))**2 + (sites - np.transpose(np.roll(np.transpose((np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]))), 1, axis=0))))**2
+
 
 def apply_change(to_sites, site, change):
     
@@ -17,7 +21,7 @@ def apply_change(to_sites, site, change):
 
 
 def one_step(sites, beta, iters=1):
-    # Function that applies the metropolis algorithm once
+    # Function that applies the metropolis algorithm once (to a number of different sites)
     for siteidx in np.random.choice(range(1,len(sites)-1), iters, replace=True):
         # Picking site
         focus_site = siteidx
@@ -66,17 +70,21 @@ def one_step(sites, beta, iters=1):
 def main():
     ############################
     # TESTING
+    '''
     L_val = 50
 
     all_sites = np.zeros(L_val)
 
-    for i in range(1000000):
-        all_sites = one_step(all_sites, 1)
+    for i in range(1000):
+        all_sites = one_step(all_sites, 100)
 
     print(all_sites)
 
     plt.plot(all_sites)
     plt.show()
+    '''
+    
+
 
 if __name__ == '__main__':
     main()
