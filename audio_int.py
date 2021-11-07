@@ -6,7 +6,9 @@ from main import *
 
 def audio(distance, length, time_frames):
     '''Function that creates an array for the audio signal at every time-step.'''
-    r_list = np.sqrt((np.linspace(0, length, len(time_frames)) - length/2)**2 + distance**2)
+    r_list = np.sqrt((np.linspace(0, length, time_frames.shape[1]) - length/2)**2 + distance**2)
+    print("Length frames:", time_frames.shape)
+    print("Length rlist:", r_list.shape)
 
     return (time_frames/(np.full((len(time_frames), len(r_list)), r_list)**2))
 
@@ -34,7 +36,7 @@ def main():
     theta0 = np.append(3*np.random.random(nPoints),
                             np.zeros(nPoints))
 
-    frames = compute_motion(theta0, args.b, args.f, nPoints, args.dt, args.noise)
+    frames = compute_motion(theta0, args.b, int(44100*4), nPoints, args.dt, args.noise)
     print([1, 2, 3, 4])
     exp_wav(
         audio(
