@@ -18,7 +18,7 @@ def apply_change(to_sites, site, change):
 
 def one_step(sites, beta, iters=1):
     # Function that applies the metropolis algorithm once
-    for siteidx in np.random.choice(range(1,len(sites)-2), iters, replace=True):
+    for siteidx in np.random.choice(range(1,len(sites)-1), iters, replace=True):
         # Picking site
         focus_site = siteidx
 
