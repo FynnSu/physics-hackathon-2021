@@ -23,7 +23,9 @@ Here we have **2** things we want to model:
 1. The classic motion of an oscillating membrane/surface under the laws of Newtonian mechanics.
 2. The thermal fluctuations that occur in systesm such as the interface between two phases of a substance (say at the triple point or something like that).
 
-The classic motion of the surface is well understood using tools such as the wave equation, however, we decided to do the simulation numerically using Hooke's law and stuff of the sort (for every tiny piece of the membrane)! On top of that, we even added some thermal randomness to the system, where our "elastic" membrane reacts at 
+The classic motion of the surface is well understood using tools such as the wave equation, however, we decided to do the simulation numerically using Hooke's law and stuff of the sort (for every tiny piece of the membrane)! On top of that, we even added some thermal randomness to the system, where our "elastic" membrane reacts at those random factors.
+
+Concretely speaking, the noise, or thermal fluctuations, are generated using a Monte Carlo and Metropolis Algorithm. Which means that, for every step, at random the fluctuations lowering the energy will be applied with probability 100%, while fluctuations augmenting the energy are applied with a probability given by an exponential decay based on the energy difference.
 
 
 # Method
