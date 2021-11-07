@@ -23,7 +23,7 @@ Here we have **2** things we want to model:
 1. The classic motion of an oscillating membrane/surface under the laws of Newtonian mechanics.
 2. The thermal fluctuations that occur in systesm such as the interface between two phases of a substance (say at the triple point or something like that).
 
-The classic motion of the surface is well understood using tools such as the wave equation, however, we decided to do the simulation numerically using Hooke's law and stuff of the sort (for every tiny piece of the membrane)! On top of that, we even added some thermal randomness to the system, where each 
+The classic motion of the surface is well understood using tools such as the wave equation, however, we decided to do the simulation numerically using Hooke's law and stuff of the sort (for every tiny piece of the membrane)! On top of that, we even added some thermal randomness to the system, where our "elastic" membrane reacts at 
 
 
 # Method
