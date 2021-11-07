@@ -12,7 +12,7 @@ Could lakes make sound? Would the quality of that sound depend on the temperatur
 
 Using odeint solve in the Numpy library, we were able to model the vibrations on the surface as a function of the tension associated with the neighbouring points. At each time step, the energy functional is evaluated and the next state of that system established with the following formula: 
 
-<img src="https://render.githubusercontent.com/render/math?math=E{\text{2D}}[h]=\sum{i, j}(h{i, j} - h{i+1, j})^2+(h{i, j} - h{i, j+1})^2">
+<img src="https://render.githubusercontent.com/render/math?math=E_{\text{2D}}[h]=\sum_{i, j}(h_{i, j} - h_{i+1, j})^2+(h_{i, j} - h_{i, j+1})^2">
 
 
 The additional fluctuations add some noise to the classical vibrations that would mimic the behaviour of an energy dissipating membrane (as will be heard?)
